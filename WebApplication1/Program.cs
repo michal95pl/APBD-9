@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Context;
+using WebApplication1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,10 +10,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<AppDbContext>(opt =>
-{
-    opt.UseSqlServer("Server=127.0.0.1,1444; Database=master; User=sa; Password=Michal2462123456; TrustServerCertificate=True;");
-});
+builder.Services.AddScoped<IDoctorService, DoctorService>();
+builder.Services.AddScoped<AppDbContext, AppDbContext>();
+builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
+
+builder.Services.AddDbContext<AppDbContext>();
 
 var app = builder.Build();
 

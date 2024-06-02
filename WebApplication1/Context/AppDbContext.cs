@@ -6,13 +6,21 @@ namespace WebApplication1.Context;
 
 public class AppDbContext : DbContext
 {
-    public AppDbContext(){}
-    
-    public AppDbContext(DbContextOptions options) : base(options)
+    private IConfiguration _configuration;
+
+    public AppDbContext(IConfiguration configuration)
     {
-        
+        _configuration = configuration;
+    }
+    
+    public AppDbContext(DbContextOptions options, IConfiguration configuration) : base(options)
+    {
+        _configuration = configuration;
     }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:DefaultConnection"]);
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new DoctorEfConfiguration());

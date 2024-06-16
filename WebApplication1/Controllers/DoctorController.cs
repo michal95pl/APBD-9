@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApplication1.DTO;
+using WebApplication1.Exceptions;
 using WebApplication1.Services;
 
 namespace WebApplication1.Controllers;
@@ -26,7 +27,7 @@ public class DoctorController : ControllerBase
     public async Task<IActionResult> DeleteDoctor([FromQuery] int idDoctor)
     {
         if (!await _doctorService.DoctorExists(idDoctor))
-            return NotFound("Doctor not exists");
+            throw new NotFoundException("Doctor not exists");
 
         await _doctorService.DeleteDoctor(idDoctor);
         

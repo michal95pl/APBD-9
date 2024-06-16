@@ -28,6 +28,7 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new PatientEfConfiguration());
         modelBuilder.ApplyConfiguration(new PrescriptionEfConfiguration());
         modelBuilder.ApplyConfiguration(new PrescriptionMedicamentEfConfiguration());
+        modelBuilder.ApplyConfiguration(new UserEfConfiguraion());
     }
     
     public DbSet<Patient> Patients { get; set; }
@@ -35,4 +36,6 @@ public class AppDbContext : DbContext
     public DbSet<Prescription> Prescriptions { get; set; }
     public DbSet<Medicament> Medicaments { get; set; }
     public DbSet<Prescription_Medicament> PrescriptionMedicaments { get; set; }
+    
+    public DbSet<User> Users { get; set; }
 }
